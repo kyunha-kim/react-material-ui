@@ -1,54 +1,38 @@
-import styled from "@emotion/styled";
-import { Accessibility, AcUnit } from "@mui/icons-material";
-import { Button, Typography } from "@mui/material";
+import { Box, Stack } from "@mui/material";
+import { useState } from "react";
 import "./App.css";
+import CenterBody from "./components/CenterBody";
+import Create from "./components/Create";
+import Footer from "./components/Footer";
+import Header from "./components/Header";
+import LeftBody from "./components/LeftBody";
+import RightBody from "./components/RightBody";
+import { ThemeProvider } from "@mui/material";
+import { createTheme } from "@mui/material/styles";
 
 function App() {
-  return (
-    <div>
-      <Button variant="text">Text</Button>
-      <Button startIcon={<AcUnit />} fullWidth size="large" variant="contained">
-        Contained
-      </Button>
-      <Button endIcon={<Accessibility />} variant="outlined">
-        Outlined
-      </Button>
-      <Button
-        sx={{
-          backgroundColor: "gray",
-          color: "#fff",
-          margin: "10px",
-          "&:hover": {
-            backgroundColor: "#000",
-          },
-          "&:disabled": {
-            backgroundColor: "#fff",
-            color: "#000",
-          },
-        }}
-      >
-        Custom Style
-      </Button>
-      <CustomButton>CustomButton</CustomButton>
+  const [mode, setMode] = useState("light");
 
-      <Typography variant="h1" gutterBottom>
-        h1. Heading
-      </Typography>
-    </div>
+  const darkTheme = createTheme({
+    palette: {
+      mode: mode,
+    },
+  });
+
+  return (
+    <ThemeProvider theme={darkTheme}>
+      <Box bgcolor={"background.default"} color={"text.primary"}>
+        <Header />
+        <Stack direction="row" spacing={2} justifyContent="space-between">
+          <LeftBody />
+          <CenterBody />
+          <RightBody mode={mode} setMode={setMode} />
+        </Stack>
+        <Create />
+        <Footer />
+      </Box>
+    </ThemeProvider>
   );
 }
-
-const CustomButton = styled(Button)({
-  backgroundColor: "gray",
-  color: "#fff",
-  margin: "10px",
-  "&:hover": {
-    backgroundColor: "#000",
-  },
-  "&:disabled": {
-    backgroundColor: "#fff",
-    color: "#000",
-  },
-});
 
 export default App;
